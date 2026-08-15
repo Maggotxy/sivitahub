@@ -1,0 +1,16 @@
+{
+  "name": "sivitahub",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A GitHub-native open-source wheel registry and remix network.",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "node --watch server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test --test-reporter=spec",
+    "check": "node scripts/check.mjs"
+  }
+}
