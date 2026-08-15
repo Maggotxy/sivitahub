@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sivitahub.dev/schemas/wheel-v1.json",
+  "title": "SivitaHub Wheel Manifest v1",
+  "type": "object",
+  "required": ["schema", "id", "name", "kind", "source", "license", "provenance"],
+  "properties": {
+    "schema": { "const": "https://sivitahub.dev/schemas/wheel-v1.json" },
+    "id": { "type": "string", "minLength": 3 },
+    "name": { "type": "string", "minLength": 1 },
+    "kind": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["provider", "repository", "url", "defaultBranch"],
+      "properties": {
+        "provider": { "const": "github" },
+        "repository": { "type": "string", "pattern": "^[^/]+/[^/]+$" },
+        "url": { "type": "string", "format": "uri" },
+        "defaultBranch": { "type": "string", "minLength": 1 },
+        "visibility": { "enum": ["public", "private", "internal"] }
+      },
+      "additionalProperties": false
+    },
+    "capabilities": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "stack": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "extensionPoints": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "manifests": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "license": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "spdx": { "type": ["string", "null"] },
+        "status": { "enum": ["detected", "needs-review", "maintainer-verified"] }
+      },
+      "additionalProperties": false
+    },
+    "safety": { "type": "object" },
+    "ai": { "type": "object" },
+    "provenance": {
+      "type": "object",
+      "required": ["generatedBy", "verification", "generatedAt"],
+      "properties": {
+        "generatedBy": { "type": "string" },
+        "verification": { "type": "string" },
+        "generatedAt": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

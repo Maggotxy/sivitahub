@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f3f0e7">
+    <meta name="description" content="SivitaHub：建立在 GitHub 之上的开源轮子注册表与二创网络。">
+    <title>SivitaHub · 开源轮子与二创网络</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#catalog">跳到轮子库</a>
+
+    <header class="site-header">
+      <div class="shell header-shell">
+        <a class="brand" href="#top" aria-label="SivitaHub 首页">
+          <span class="brand-mark" aria-hidden="true">S</span>
+          <span>SivitaHub</span>
+        </a>
+        <nav class="main-nav" aria-label="主导航">
+          <a href="#catalog">轮子库</a>
+          <a href="#import">导入仓库</a>
+          <a href="#lineage">二创谱系</a>
+        </nav>
+        <div class="header-actions">
+          <span class="connection-pill" id="githubStatus">GitHub 未连接</span>
+          <button class="button button-dark button-small" id="connectGithubButton" type="button">连接 GitHub</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" id="top">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span></span> GitHub 原生 · AI 时代的复用基础设施</p>
+            <h1>找到轮子，理解轮子，<em>做出自己的产品。</em></h1>
+            <p class="hero-lead">SivitaHub 不重新托管代码。我们把 GitHub 仓库整理成可搜索、可理解、可组合的开源轮子，并记录每一次真实二创。</p>
+            <form class="hero-search" id="heroSearchForm" role="search">
+              <label class="sr-only" for="heroSearchInput">搜索开源轮子</label>
+              <input id="heroSearchInput" name="q" type="search" autocomplete="off" placeholder="试试：RAG、多租户、MCP、Chat UI…">
+              <button class="button button-accent" type="submit">搜索轮子 <span aria-hidden="true">↗</span></button>
+            </form>
+            <div class="trust-row" aria-label="平台边界">
+              <span><i aria-hidden="true">01</i> 不保存源码副本</span>
+              <span><i aria-hidden="true">02</i> 不要求粘贴 PAT</span>
+              <span><i aria-hidden="true">03</i> 不执行陌生代码</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="轮子组合示意图">
+            <div class="visual-glow"></div>
+            <div class="source-card floating-card">
+              <div class="card-kicker">SOURCE OF TRUTH</div>
+              <div class="repo-row"><span class="repo-icon">⌘</span><strong>github.com/owner/project</strong></div>
+              <div class="branch-line"><span></span> main · 8f3c31a</div>
+            </div>
+            <div class="wheel-card floating-card">
+              <div class="wheel-orbit" aria-hidden="true"></div>
+              <div class="wheel-glyph" aria-hidden="true">✦</div>
+              <div>
+                <small>STRUCTURED WHEEL</small>
+                <strong>Multi-tenant Auth</strong>
+                <p>Next.js · PostgreSQL · OAuth</p>
+              </div>
+            </div>
+            <div class="manifest-card floating-card">
+              <div class="manifest-head"><span>wheel.yaml</span><span class="status-dot">verified</span></div>
+              <pre>source: github
+license: MIT
+capabilities:
+  - authentication
+  - multi-tenant
+extensionPoints:
+  - login-page
+  - permission-policy</pre>
+            </div>
+            <div class="composition-chip chip-one">RAG Engine</div>
+            <div class="composition-chip chip-two">Admin UI</div>
+            <div class="composition-chip chip-three">Payments</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="平台统计">
+        <div class="shell metric-grid">
+          <div><strong id="metricWheels">—</strong><span>精选轮子</span></div>
+          <div><strong id="metricCategories">—</strong><span>能力分类</span></div>
+          <div><strong>GitHub</strong><span>唯一代码事实源</span></div>
+          <div><strong>0</strong><span>平台托管源码</span></div>
+        </div>
+      </section>
+
+      <section class="catalog section" id="catalog">
+        <div class="shell">
+          <div class="section-heading split-heading">
+            <div>
+              <p class="eyebrow"><span></span> CURATED WHEELS</p>
+              <h2>不是项目导航，<br>是可复用能力目录。</h2>
+            </div>
+            <p>从仓库来源、技术栈、许可证、扩展点和真实二创结果理解一个项目，而不是只看 Star。</p>
+          </div>
+
+          <div class="catalog-toolbar">
+            <div class="category-list" id="categoryList" aria-label="按分类筛选"></div>
+            <label class="compact-search">
+              <span aria-hidden="true">⌕</span>
+              <span class="sr-only">筛选轮子</span>
+              <input id="catalogSearchInput" type="search" placeholder="筛选名称、能力、技术栈">
+            </label>
+          </div>
+
+          <div class="result-line">
+            <span id="resultsCount">正在载入轮子…</span>
+            <span>来源数据会标明「自动推断」或「维护者确认」</span>
+          </div>
+          <div class="wheel-grid" id="wheelGrid" aria-live="polite"></div>
+          <div class="empty-state" id="emptyState" hidden>
+            <strong>没有匹配的轮子</strong>
+            <p>换一个关键词，或者直接粘贴 GitHub 仓库生成导入预览。</p>
+            <a class="button button-dark" href="#import">导入仓库</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="import-section section" id="import">
+        <div class="shell import-shell">
+          <div class="import-copy">
+            <p class="eyebrow eyebrow-light"><span></span> GITHUB IMPORTER</p>
+            <h2>给出仓库地址，<br>先看懂，再决定怎么用。</h2>
+            <p>SivitaHub 只读获取仓库元数据、README、许可证和常见依赖清单。不会运行安装脚本，不会把源码复制进平台。</p>
+            <div class="permission-stack">
+              <div><span>Metadata</span><strong>Read-only</strong></div>
+              <div><span>Contents</span><strong>Read-only</strong></div>
+              <div><span>Administration</span><strong>Not requested</strong></div>
+            </div>
+          </div>
+
+          <div class="import-workbench">
+            <div class="workbench-top">
+              <div><span></span><span></span><span></span></div>
+              <small>IMPORT PREVIEW / SAFE MODE</small>
+            </div>
+            <form class="import-form" id="importForm">
+              <label for="repositoryInput">GitHub 仓库 URL 或 owner/repo</label>
+              <div class="import-input-row">
+                <input id="repositoryInput" name="repository" required autocomplete="off" spellcheck="false" placeholder="https://github.com/shadcn-ui/ui">
+                <button class="button button-accent" id="importButton" type="submit">开始解析</button>
+              </div>
+              <p id="importAuthNote">公共仓库可直接解析；连接 GitHub 后可读取你选择的私有仓库。</p>
+            </form>
+            <div class="import-result" id="importResult" hidden aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lineage section" id="lineage">
+        <div class="shell lineage-grid">
+          <div class="lineage-copy">
+            <p class="eyebrow"><span></span> LINEAGE GRAPH</p>
+            <h2>每一次二创，<br>都应该知道自己从哪里来。</h2>
+            <p>Fork 只能表达单一仓库关系。SivitaHub 未来会记录多个轮子的组合、模板来源、移植、补丁和灵感关系。</p>
+            <div class="lineage-types">
+              <span>FORK_OF</span><span>REMIX_OF</span><span>COMPOSED_FROM</span><span>PORT_OF</span>
+            </div>
+          </div>
+          <div class="lineage-map" aria-label="二创谱系示意图">
+            <svg viewBox="0 0 720 420" role="img" aria-label="多个开源轮子组合为成品的关系图">
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z"></path></marker>
+              </defs>
+              <path class="map-line" d="M165 105 C300 105 280 210 400 210" marker-end="url(#arrow)"></path>
+              <path class="map-line" d="M165 210 C300 210 285 210 400 210" marker-end="url(#arrow)"></path>
+              <path class="map-line" d="M165 315 C300 315 280 210 400 210" marker-end="url(#arrow)"></path>
+              <path class="map-line accent-line" d="M510 210 C600 210 595 210 660 210" marker-end="url(#arrow)"></path>
+              <g class="map-node"><rect x="25" y="70" width="140" height="70" rx="16"></rect><text x="45" y="99">Chat UI</text><text class="sub" x="45" y="122">github:wheel/a</text></g>
+              <g class="map-node"><rect x="25" y="175" width="140" height="70" rx="16"></rect><text x="45" y="204">RAG Engine</text><text class="sub" x="45" y="227">github:wheel/b</text></g>
+              <g class="map-node"><rect x="25" y="280" width="140" height="70" rx="16"></rect><text x="45" y="309">Auth Kit</text><text class="sub" x="45" y="332">github:wheel/c</text></g>
+              <g class="map-node product-node"><rect x="400" y="166" width="150" height="88" rx="20"></rect><text x="425" y="202">My AI Product</text><text class="sub" x="425" y="228">wheel.lock · v1</text></g>
+              <g class="map-node output-node"><rect x="610" y="176" width="90" height="68" rx="18"></rect><text x="630" y="207">LIVE</text><text class="sub" x="630" y="227">verified</text></g>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="boundary section">
+        <div class="shell boundary-card">
+          <div>
+            <p class="eyebrow eyebrow-light"><span></span> PRODUCT BOUNDARY</p>
+            <h2>我们不做另一个 GitHub。</h2>
+          </div>
+          <div class="boundary-list">
+            <p><strong>GitHub 负责</strong><span>源码、Commit、Issue、PR、Release 与协作</span></p>
+            <p><strong>SivitaHub 负责</strong><span>理解、分类、兼容、许可证、谱系与真实二创结果</span></p>
+            <p><strong>Codex 负责</strong><span>在用户确认后修改代码、运行测试、提交分支和 PR</span></p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-shell">
+        <div><a class="brand footer-brand" href="#top"><span class="brand-mark">S</span><span>SivitaHub</span></a><p>Open-source wheels, understood and remixed.</p></div>
+        <div class="footer-links"><a href="https://github.com/Maggotxy/sivitahub" rel="noreferrer">GitHub</a><a href="/api/schema/wheel-v1">Wheel Schema</a><a href="#import">导入仓库</a></div>
+      </div>
+    </footer>
+
+    <dialog class="wheel-dialog" id="wheelDialog">
+      <div class="dialog-shell">
+        <button class="dialog-close" id="dialogCloseButton" type="button" aria-label="关闭详情">×</button>
+        <div id="dialogContent"></div>
+      </div>
+    </dialog>
+
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
